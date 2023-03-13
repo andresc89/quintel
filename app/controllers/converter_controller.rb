@@ -1,29 +1,26 @@
 class ConverterController < ApplicationController
   def index
-    value = params[:value].to_f
-    unit = params[:unit]
-    if value.negative?
-      converter_index_path
-    else
-      case unit
-      when "Kilograms"
-        converted_value = value * 2.20462 # convert kg to lbs
-        converted_unit = "lbs"
-      when "Meters"
-        converted_value = value * 3.28084 # convert m to ft
-        converted_unit = "ft"
-      when "Pounds"
-        converted_value = value * 0.45359237 # convert lbs to kg
-        converted_unit = "kg"
-      when "Feet"
-        converted_value = value * 0.3048 # convert ft to m
-        converted_unit = "m"
+    input = params[:input]&.strip # assigning the value from the params to "input" and using strip to remove spaces
+    @output = if input.present? # creates the @output variable if the input has a value
+      from, to = input.downcase.split(' in ') #splits the array in half to identify the ammount and units used ( "2 kg lbs" should be the result)
+      if from.present? && to.present? # checks if both values are present and further splits the array to get the amount and original unit
+        from_value, from_unit = from.split(' ')
+        to_unit = to
+        case [from_unit, to_unit] # here we start the logic, we have the units ready to be used, they are checked on the when clause, and we use float to calculate
+        when ['kg', 'lbs']
+          from_value.to_f * 2.20462
+        when ['lbs', 'kg']
+          from_value.to_f / 2.20462
+        when ['m', 'ft']
+          from_value.to_f * 3.28084
+        when ['ft', 'm']
+          from_value.to_f / 3.28084
+        else
+          'Invalid conversion units'
+        end
       else
-        converted_value = value
-        converted_unit = ""
+        'Invalid input format'
       end
-
-      @result = "#{value} #{unit} is equal to #{converted_value} #{converted_unit}."
     end
   end
 end
