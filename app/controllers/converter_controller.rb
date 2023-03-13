@@ -5,16 +5,16 @@ class ConverterController < ApplicationController
       from, to = input.downcase.split(' in ') #splits the array in half to identify the ammount and units used ( "2 kg lbs" should be the result)
       if from.present? && to.present? # checks if both values are present and further splits the array to get the amount and original unit
         from_value, from_unit = from.split(' ')
-        to_unit = to
-        case [from_unit, to_unit] # here we start the logic, we have the units ready to be used, they are checked on the when clause, and we use float to calculate
+        @to_unit = to
+        case [from_unit, @to_unit] # here we start the logic, we have the units ready to be used, they are checked on the when clause, and we use float to calculate
         when ['kg', 'lbs']
-          from_value.to_f * 2.20462
+          (from_value.to_f * 2.20462).round(2)
         when ['lbs', 'kg']
-          from_value.to_f / 2.20462
+          (from_value.to_f / 2.20462).round(2)
         when ['m', 'ft']
-          from_value.to_f * 3.28084
+          (from_value.to_f * 3.28084).round(2)
         when ['ft', 'm']
-          from_value.to_f / 3.28084
+          (from_value.to_f / 3.28084).round(2)
         else
           'Invalid conversion units. Please type the units as following: "kg, lbs, m, ft." '
         end

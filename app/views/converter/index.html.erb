@@ -7,5 +7,5 @@
 <% end %>
 
 <% if @output.present? %>
-  <p><%= @output %></p>
+ <p><%= '%.2f' % @output %><%= @to_unit %></p>
 <% end %>
