@@ -1,18 +1,9 @@
-
 <h1>Quintel's Ultimate Unit converter</h1>
-
-<%= form_tag('/converter', method: 'get') do %>
-  <%= label_tag(:value, "Value to convert") %>
-  <%= text_field_tag(:value, nil, placeholder: "Enter a value to convert") %>
-
-  <%= label_tag(:unit, "Unit type") %>
-  <%= select_tag(:unit, options_for_select(["Kilograms","Pounds","Feet","Meters"]), prompt: "Select a unit type") %>
-
-  <%= submit_tag("Calculate") %>
+<%= form_tag converter_index_path, method: :get do %>
+  <%= text_field_tag :input %>
+  <%= submit_tag "Convert" %>
 <% end %>
 
-<% if @result %>
-  <p><%= @result %></p>
+<% if @output.present? %>
+  <p><%= @output %></p>
 <% end %>
-
-
