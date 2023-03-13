@@ -16,10 +16,10 @@ class ConverterController < ApplicationController
         when ['ft', 'm']
           from_value.to_f / 3.28084
         else
-          'Invalid conversion units'
+          'Invalid conversion units. Please type the units as following: "kg, lbs, m, ft." '
         end
       else
-        'Invalid input format. please type the units as following: "kg, lbs, m, ft." '
+        'Invalid input format'
       end
     end
   end
