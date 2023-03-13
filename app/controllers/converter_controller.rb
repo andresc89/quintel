@@ -19,7 +19,7 @@ class ConverterController < ApplicationController
           'Invalid conversion units'
         end
       else
-        'Invalid input format'
+        'Invalid input format. please type the units as following: "kg, lbs, m, ft." '
       end
     end
   end
